@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ac4e653-aa50-4704-80fe-adf4daf72f39" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/Clock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/IScheduler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/RoundRobin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/proceso/PCB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/process/PCB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/proceso/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/process/Status.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/process/PCB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/process/PCB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/IScheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/IScheduler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/RoundRobin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/RoundRobin.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +28,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -46,20 +48,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.umg.sysemu.Main" />
+      <module name="SysEmu" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.umg.sysemu.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -79,7 +101,8 @@
       <workItem from="1759329936038" duration="1349000" />
       <workItem from="1759339624088" duration="5577000" />
       <workItem from="1759350874367" duration="2848000" />
-      <workItem from="1759416161019" duration="5598000" />
+      <workItem from="1759416161019" duration="10719000" />
+      <workItem from="1759443893018" duration="1388000" />
     </task>
     <servers />
   </component>
@@ -91,8 +114,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="2" />
+          <line>42</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -56,7 +56,10 @@ public class PCB implements Comparable<PCB>{
     public Status getStatus() { return this.status; }
 
     public int consumeCpuBurst() {
-        if(this.cpuBursts > 0) return this.cpuBursts--;
+        if(this.cpuBursts > 0) {
+            this.cpuBursts--;
+            return this.cpuBursts;
+        }
         return -1;
     }
 

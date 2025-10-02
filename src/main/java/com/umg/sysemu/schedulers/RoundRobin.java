@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RoundRobin implements IScheduler{
-    private List<Long> ganttChart;
+    private List<PCB> ganttChart;
     private Map<Long,Integer> quantumTracker;
     private PCB processInUse;
     private Long pidInUse;
@@ -21,7 +21,7 @@ public class RoundRobin implements IScheduler{
         this.quantum = quantum;
         this.processInUse = null;
         this.pidInUse = null;
-        this.ganttChart = new ArrayList<Long>();
+        this.ganttChart = new ArrayList<>();
         this.quantumTracker = new HashMap<Long,Integer>();
         this.inUseFlag = false;
     }
@@ -29,46 +29,55 @@ public class RoundRobin implements IScheduler{
     @Override
     public void execute(List<PCB> readyQueue) {
         if(!inUseFlag) {
+            if(readyQueue.isEmpty()) return;
+
             //NEW PROCESS INBOUND
-            processInUse = readyQueue.getFirst();
-            //if(processInUse.getArrivalTime() != Clock.time()) return;
+            processInUse = readyQueue.removeFirst();
 
             pidInUse = processInUse.getPid();
             processInUse.changeStatus(Status.RUNNING);
 
             if(!quantumTracker.containsKey(pidInUse)) {
-                quantumTracker.put(pidInUse,1);
+                quantumTracker.put(pidInUse,0);
                 processInUse.setAttentionTimeAt(Clock.time());
             }
-            processInUse.consumeCpuBurst();
 
             inUseFlag = true;
-        }else {
-            int lastQuantum = quantumTracker.get(pidInUse);
-            if(lastQuantum + 1 <= quantum) {
-                if(processInUse.consumeCpuBurst() > 0) {
-                    //PROCESS IN USE
-                    int newQuantum = quantumTracker.get(pidInUse) + 1;
-                    quantumTracker.put(pidInUse,newQuantum);
-                }else {
-                    //PROCESS TERMINATED
-                    processInUse.changeStatus(Status.TERMINATED);
-                    processInUse.setCompletionTimeAt(Clock.time());
-                    inUseFlag = false;
-                }
-            }else {
-                //PROCESS NOT IN USE BUT WITH WORK TO DO
-                quantumTracker.put(pidInUse,0);
-                processInUse.changeStatus(Status.READY);
+        }
+        int remaining = processInUse.consumeCpuBurst();
+        int used = quantumTracker.get(pidInUse) + 1;
+        quantumTracker.put(pidInUse,used);
 
-                processInUse = null;
-                pidInUse = null;
+        if(remaining == 0) {
+            processInUse.changeStatus(Status.TERMINATED);
+            processInUse.setCompletionTimeAt(Clock.time() + 1);
+            quantumTracker.remove(pidInUse);
+            ganttChart.add(processInUse);
 
-                PCB lastProcess = readyQueue.removeFirst();
-                readyQueue.addLast(lastProcess);
+            processInUse = null;
+            pidInUse = null;
+            inUseFlag = false;
+            return;
+        }
 
-                inUseFlag = false;
-            }
+        if(used == quantum) {
+            quantumTracker.put(pidInUse,0);
+            processInUse.changeStatus(Status.READY);
+            readyQueue.addLast(processInUse);
+
+            processInUse = null;
+            pidInUse = null;
+            inUseFlag = false;
+        }
+    }
+
+    public void printResults() {
+        for(PCB p : ganttChart) {
+            System.out.println("PROCESS: " + p.getPid());
+            System.out.println("COMPLETION TIME: " + p.getCompletionTime());
+            System.out.println("TURNAROUND TIME: " + p.calculateTurnaroundTime());
+            System.out.println("WAITING TIME: " + p.calculateWaitingTime());
+            System.out.println();
         }
     }
 }
