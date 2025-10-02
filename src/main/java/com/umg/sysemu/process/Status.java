@@ -1,4 +1,4 @@
-package com.umg.sysemu.proceso;
+package com.umg.sysemu.process;
 
 public enum Status {
     NEW("NEW"),

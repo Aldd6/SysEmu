@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ac4e653-aa50-4704-80fe-adf4daf72f39" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/proceso/PCB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/proceso/Status.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/Clock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/IScheduler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/RoundRobin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/proceso/PCB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/process/PCB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/proceso/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/process/Status.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +21,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -43,6 +48,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
@@ -71,11 +77,29 @@
       <option name="presentableId" value="Default" />
       <updated>1759329935099</updated>
       <workItem from="1759329936038" duration="1349000" />
-      <workItem from="1759339624088" duration="3096000" />
+      <workItem from="1759339624088" duration="5577000" />
+      <workItem from="1759350874367" duration="2848000" />
+      <workItem from="1759416161019" duration="5598000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="quantumTracker" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package com.umg.sysemu.proceso;
+package com.umg.sysemu.process;
 
 public class PCB implements Comparable<PCB>{
     private long pid;
@@ -12,10 +12,12 @@ public class PCB implements Comparable<PCB>{
     private int turnaroundTime;
     private int waitingTime;
     private int responseTime;
+    private int cpuBurstsTotal;
 
     public PCB(int priority, int cpuBursts) {
         this.priority = priority;
         this.cpuBursts = cpuBursts;
+        this.cpuBurstsTotal = cpuBursts;
         this.status = Status.NEW;
         this.arrivalTime = -1;
         this.completionTime = -1;
@@ -40,7 +42,7 @@ public class PCB implements Comparable<PCB>{
     }
     public int getTurnaroundTime() { return this.turnaroundTime; }
     public int calculateWaitingTime() {
-        this.waitingTime = turnaroundTime - cpuBursts;
+        this.waitingTime = turnaroundTime - cpuBurstsTotal;
         return this.waitingTime;
     }
     public int getWaitingTime() { return this.waitingTime; }
@@ -58,6 +60,7 @@ public class PCB implements Comparable<PCB>{
         return -1;
     }
 
+    //Valor 99 es prioridad maxima y 1 es prioridad minima
     public int incrementPriority() {
         if(this.priority < 99) return this.priority++;
         return 99;
