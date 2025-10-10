@@ -17,9 +17,9 @@ public class MultilevelQueue implements IScheduler{
     private int sysQuantum;
     private int userQuantum;
 
-    private IScheduler rrSystem;
-    private IScheduler rrUser;
-    private IScheduler fcsBatch;
+    private RoundRobin rrSystem;
+    private RoundRobin rrUser;
+    private FCFS fcsBatch;
 
     public MultilevelQueue(int sysQuantum, int userQuantum) {
         this.sysQueue = new ArrayList<>();
@@ -55,9 +55,21 @@ public class MultilevelQueue implements IScheduler{
 
         if(isAllQueuesEmpty() && !isCpuBusy()) return;
 
+        if(rrUser.isCpuBusy() && !sysQueue.isEmpty()) {
+            rrUser.preempt(userQueue);
+        }
+
+        if(fcsBatch.isCpuBusy() && !sysQueue.isEmpty()) {
+            fcsBatch.preempt(batchQueue);
+        }
+
         rrSystem.execute(sysQueue);
         inUseFlagSys = rrSystem.isCpuBusy();
         if(!sysQueue.isEmpty() || inUseFlagSys) return;
+
+        if(fcsBatch.isCpuBusy() && !userQueue.isEmpty()) {
+            fcsBatch.preempt(batchQueue);
+        }
 
         rrUser.execute(userQueue);
         inUseFlagUser = rrUser.isCpuBusy();

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RoundRobin implements IScheduler{
+public class RoundRobin implements IScheduler,PreemptPolicy{
     private List<PCB> ganttChart;
     private Map<Long,Integer> quantumTracker;
     private PCB processInUse;
@@ -71,7 +71,18 @@ public class RoundRobin implements IScheduler{
         }
     }
 
+    @Override
     public boolean isCpuBusy() { return inUseFlag; }
+
+    @Override
+    public void preempt(List<PCB> ownerQueue) {
+        if(!inUseFlag) return;
+        processInUse.changeStatus(Status.READY);
+        ownerQueue.addFirst(processInUse);
+        processInUse = null;
+        pidInUse = null;
+        inUseFlag = false;
+    }
 
     public void printResults() {
         for(PCB p : ganttChart) {
