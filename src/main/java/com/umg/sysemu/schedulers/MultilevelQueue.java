@@ -10,7 +10,9 @@ public class MultilevelQueue implements IScheduler{
     private List<PCB> sysQueue;
     private List<PCB> userQueue;
     private List<PCB> batchQueue;
-    private boolean inUseFlag;
+    private boolean inUseFlagSys;
+    private boolean inUseFlagUser;
+    private boolean inUseFlagBatch;
 
     private int sysQuantum;
     private int userQuantum;
@@ -23,7 +25,9 @@ public class MultilevelQueue implements IScheduler{
         this.sysQueue = new ArrayList<>();
         this.userQueue = new ArrayList<>();
         this.batchQueue = new ArrayList<>();
-        this.inUseFlag = false;
+        this.inUseFlagSys = false;
+        this.inUseFlagUser = false;
+        this.inUseFlagBatch = false;
 
         this.sysQuantum = sysQuantum;
         this.userQuantum = userQuantum;
@@ -49,22 +53,22 @@ public class MultilevelQueue implements IScheduler{
         userQueue.removeIf(p -> p.getStatus() == Status.TERMINATED);
         batchQueue.removeIf(p -> p.getStatus() == Status.TERMINATED);
 
-        if(isAllQueuesEmpty() && !inUseFlag) return;
+        if(isAllQueuesEmpty() && !isCpuBusy()) return;
 
         rrSystem.execute(sysQueue);
-        inUseFlag = rrSystem.isCpuBusy();
-        if(!sysQueue.isEmpty() || inUseFlag) return;
+        inUseFlagSys = rrSystem.isCpuBusy();
+        if(!sysQueue.isEmpty() || inUseFlagSys) return;
 
         rrUser.execute(userQueue);
-        inUseFlag = rrUser.isCpuBusy();
-        if(!userQueue.isEmpty() || inUseFlag) return;
+        inUseFlagUser = rrUser.isCpuBusy();
+        if(!userQueue.isEmpty() || inUseFlagUser) return;
 
         fcsBatch.execute(batchQueue);
-        inUseFlag = fcsBatch.isCpuBusy();
+        inUseFlagBatch = fcsBatch.isCpuBusy();
     }
 
     @Override
-    public boolean isCpuBusy() { return inUseFlag; }
+    public boolean isCpuBusy() { return inUseFlagSys || inUseFlagUser || inUseFlagBatch; }
 
     @Override
     public void printResults() {
