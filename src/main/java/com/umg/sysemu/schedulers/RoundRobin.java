@@ -71,6 +71,8 @@ public class RoundRobin implements IScheduler{
         }
     }
 
+    public boolean isCpuBusy() { return inUseFlag; }
+
     public void printResults() {
         for(PCB p : ganttChart) {
             System.out.println("PROCESS: " + p.getPid());

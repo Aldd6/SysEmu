@@ -13,12 +13,14 @@ public class PCB implements Comparable<PCB>{
     private int waitingTime;
     private int responseTime;
     private int cpuBurstsTotal;
+    private Type processType;
 
-    public PCB(int priority, int cpuBursts) {
+    public PCB(int priority, int cpuBursts, Type processType) {
         this.priority = priority;
         this.cpuBursts = cpuBursts;
         this.cpuBurstsTotal = cpuBursts;
         this.status = Status.NEW;
+        this.processType = processType;
         this.arrivalTime = -1;
         this.completionTime = -1;
         this.attentionTime = -1;
@@ -54,6 +56,8 @@ public class PCB implements Comparable<PCB>{
 
     public void changeStatus(Status newStatus) { this.status = newStatus; }
     public Status getStatus() { return this.status; }
+
+    public Type getProcessType() { return this.processType; }
 
     public int consumeCpuBurst() {
         if(this.cpuBursts > 0) {
