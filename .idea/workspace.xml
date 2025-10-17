@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ac4e653-aa50-4704-80fe-adf4daf72f39" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/PreemptPolicy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/UserGroup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/FCFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/FCFS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/MultilevelQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/MultilevelQueue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/RoundRobin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/RoundRobin.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +16,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -109,7 +105,11 @@
       <workItem from="1759955313843" duration="1798000" />
       <workItem from="1760054946842" duration="3680000" />
       <workItem from="1760104774002" duration="7278000" />
-      <workItem from="1760120602006" duration="2342000" />
+      <workItem from="1760120602006" duration="2862000" />
+      <workItem from="1760235081328" duration="2184000" />
+      <workItem from="1760297942487" duration="1914000" />
+      <workItem from="1760303521599" duration="1264000" />
+      <workItem from="1760661139517" duration="11000" />
     </task>
     <servers />
   </component>
@@ -122,7 +122,7 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java</url>
           <line>45</line>
-          <option name="timeStamp" value="3" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
