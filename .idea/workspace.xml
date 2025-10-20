@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ac4e653-aa50-4704-80fe-adf4daf72f39" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/UserGroup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/MultilevelQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/MultilevelQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/UserGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/UserGroup.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +111,9 @@
       <workItem from="1760297942487" duration="1914000" />
       <workItem from="1760303521599" duration="1264000" />
       <workItem from="1760661139517" duration="11000" />
+      <workItem from="1760661831371" duration="1343000" />
+      <workItem from="1760663192008" duration="106000" />
+      <workItem from="1760972091903" duration="1817000" />
     </task>
     <servers />
   </component>

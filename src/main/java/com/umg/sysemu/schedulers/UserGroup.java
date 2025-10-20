@@ -15,7 +15,7 @@ public class UserGroup {
     public boolean isUserActive() { return !group.isEmpty(); }
 
     public double getProcessQuantum(double groupShares) {
-
+        return 0;
     }
 
 }

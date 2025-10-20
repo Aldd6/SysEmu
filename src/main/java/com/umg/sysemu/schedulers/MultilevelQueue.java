@@ -3,13 +3,18 @@ package com.umg.sysemu.schedulers;
 import com.umg.sysemu.process.PCB;
 import com.umg.sysemu.process.Status;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MultilevelQueue implements IScheduler{
     private List<PCB> sysQueue;
     private List<PCB> userQueue;
     private List<PCB> batchQueue;
+
+    private Set<Long> sysSet;
+    private Set<Long> userSet;
+    private Set<Long> batchSet;
+    private Set<Long> ramPids;
+
     private boolean inUseFlagSys;
     private boolean inUseFlagUser;
     private boolean inUseFlagBatch;
@@ -25,6 +30,12 @@ public class MultilevelQueue implements IScheduler{
         this.sysQueue = new ArrayList<>();
         this.userQueue = new ArrayList<>();
         this.batchQueue = new ArrayList<>();
+
+        this.sysSet = new HashSet<>();
+        this.userSet = new HashSet<>();
+        this.batchSet = new HashSet<>();
+        this.ramPids = new HashSet<>();
+
         this.inUseFlagSys = false;
         this.inUseFlagUser = false;
         this.inUseFlagBatch = false;
@@ -39,19 +50,30 @@ public class MultilevelQueue implements IScheduler{
 
     @Override
     public void execute(List<PCB> readyQueue) {
-        while(!readyQueue.isEmpty()) {
-            PCB p = readyQueue.removeFirst();
-            if(p.getStatus() == Status.TERMINATED) continue;
-            switch(p.getProcessType()) {
-                case SYSTEM -> sysQueue.add(p);
-                case USER -> userQueue.add(p);
-                case BATCH -> batchQueue.add(p);
+
+        ramPids.clear();
+        for(PCB p : readyQueue) {
+            if(p.getStatus() != Status.TERMINATED) ramPids.add(p.getPid());
+        }
+
+        for(PCB p : readyQueue) {
+            if(p.getStatus() != Status.READY) continue;
+            switch (p.getProcessType()) {
+                case SYSTEM -> {
+                    if(sysSet.add(p.getPid())) sysQueue.addLast(p);
+                }
+                case USER -> {
+                    if(userSet.add(p.getPid())) userQueue.addLast(p);
+                }
+                case BATCH -> {
+                    if(batchSet.add(p.getPid())) batchQueue.addLast(p);
+                }
             }
         }
 
-        sysQueue.removeIf(p -> p.getStatus() == Status.TERMINATED);
-        userQueue.removeIf(p -> p.getStatus() == Status.TERMINATED);
-        batchQueue.removeIf(p -> p.getStatus() == Status.TERMINATED);
+        clean(sysQueue,sysSet);
+        clean(userQueue,userSet);
+        clean(batchQueue,batchSet);
 
         if(isAllQueuesEmpty() && !isCpuBusy()) return;
 
@@ -93,4 +115,15 @@ public class MultilevelQueue implements IScheduler{
     }
 
     private boolean isAllQueuesEmpty() { return sysQueue.isEmpty() && userQueue.isEmpty() && batchQueue.isEmpty(); }
+
+    private void clean(List<PCB> queue, Set<Long> set) {
+        for(Iterator<PCB> it = queue.iterator(); it.hasNext(); ) {
+            PCB p = it.next();
+            long pid = p.getPid();
+            if(p.getStatus() != Status.READY || !ramPids.contains(pid)) {
+                it.remove();
+                set.remove(pid);
+            }
+        }
+    }
 }
