@@ -14,8 +14,9 @@ public class PCB implements Comparable<PCB>{
     private int responseTime;
     private int cpuBurstsTotal;
     private Type processType;
+    private String userIdOwner;
 
-    public PCB(int priority, int cpuBursts, Type processType) {
+    public PCB(int priority, int cpuBursts, Type processType, String userIdOwner) {
         this.priority = priority;
         this.cpuBursts = cpuBursts;
         this.cpuBurstsTotal = cpuBursts;
@@ -27,10 +28,12 @@ public class PCB implements Comparable<PCB>{
         this.turnaroundTime = -1;
         this.waitingTime = -1;
         this.responseTime = -1;
+        this.userIdOwner = userIdOwner;
     }
 
     public void assignPid() { this.pid = System.nanoTime(); }
     public long getPid() { return this.pid; }
+    public String getUserId() { return this.userIdOwner; }
     public void setArrivalTimeAt(int arrivalTime) { this.arrivalTime = arrivalTime; }
     public int getArrivalTime() { return this.arrivalTime; }
     public void setCompletionTimeAt(int completionTime) { this.completionTime = completionTime; }

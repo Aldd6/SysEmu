@@ -4,10 +4,7 @@ import com.umg.sysemu.kernel.Clock;
 import com.umg.sysemu.process.PCB;
 import com.umg.sysemu.process.Status;
 import com.umg.sysemu.process.Type;
-import com.umg.sysemu.schedulers.FCFS;
-import com.umg.sysemu.schedulers.IScheduler;
-import com.umg.sysemu.schedulers.MultilevelQueue;
-import com.umg.sysemu.schedulers.RoundRobin;
+import com.umg.sysemu.schedulers.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -19,17 +16,17 @@ public class Main {
         List<PCB> readyQueue = new LinkedList<>();
 
         // Define procesos (BT y lo que sea tu segundo parámetro)
-        PCB p1 = new PCB(4,5, Type.USER); p1.setArrivalTimeAt(0); p1.assignPid();
-        PCB p2 = new PCB(3,7, Type.SYSTEM); p2.setArrivalTimeAt(1); p2.assignPid();
-        PCB p3 = new PCB(2,4, Type.BATCH); p3.setArrivalTimeAt(3); p3.assignPid();
-        PCB p4 = new PCB(1,6, Type.USER); p4.setArrivalTimeAt(5); p4.assignPid();
+        PCB p1 = new PCB(4,5, Type.USER, "A"); p1.setArrivalTimeAt(0); p1.assignPid();
+        PCB p2 = new PCB(3,7, Type.SYSTEM, "B"); p2.setArrivalTimeAt(1); p2.assignPid();
+        PCB p3 = new PCB(2,4, Type.BATCH, "A"); p3.setArrivalTimeAt(3); p3.assignPid();
+        PCB p4 = new PCB(1,6, Type.USER, "C"); p4.setArrivalTimeAt(5); p4.assignPid();
 
         // Lista total para saber cuándo terminamos
         List<PCB> all = Arrays.asList(p1, p2, p3, p4);
         all.sort(Comparator.comparingInt(PCB::getArrivalTime));
         int next = 0; // índice de próxima llegada
 
-        IScheduler rr = new MultilevelQueue(5,3);
+        IScheduler rr = new FairShare(1);
 
         while (!allTerminated(all)) {
             int t = Clock.time();
