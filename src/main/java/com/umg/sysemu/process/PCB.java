@@ -74,6 +74,8 @@ public class PCB implements Comparable<PCB>{
         return -1;
     }
 
+    public int getPriority() { return this.priority; }
+
     //Valor 99 es prioridad maxima y 1 es prioridad minima
     public int incrementPriority() {
         if(this.priority < 99) return this.priority++;
