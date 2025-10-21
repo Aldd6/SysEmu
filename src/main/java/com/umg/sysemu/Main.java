@@ -26,7 +26,7 @@ public class Main {
         all.sort(Comparator.comparingInt(PCB::getArrivalTime));
         int next = 0; // índice de próxima llegada
 
-        IScheduler rr = new FairShare(1);
+        IScheduler rr = new FairShare(5);
 
         while (!allTerminated(all)) {
             int t = Clock.time();

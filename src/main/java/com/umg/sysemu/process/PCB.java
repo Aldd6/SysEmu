@@ -5,6 +5,7 @@ public class PCB implements Comparable<PCB>{
     private Status status;
     private int priority;
     private int cpuBursts; //Numero de rafagas a ejecutar
+    private int ramSize;
     private int arrivalTime; //Tiempo en que entra un proceso a cola de listos
     private int completionTime; //Tiempo en que se finaliza las rafagas de un proceso
     private int attentionTime; //Tiempo en que se atiende por primera vez un proceso
@@ -16,9 +17,10 @@ public class PCB implements Comparable<PCB>{
     private Type processType;
     private String userIdOwner;
 
-    public PCB(int priority, int cpuBursts, Type processType, String userIdOwner) {
+    public PCB(int priority, int cpuBursts, int ramSize, Type processType, String userIdOwner) {
         this.priority = priority;
         this.cpuBursts = cpuBursts;
+        this.ramSize = ramSize;
         this.cpuBurstsTotal = cpuBursts;
         this.status = Status.NEW;
         this.processType = processType;
@@ -59,6 +61,8 @@ public class PCB implements Comparable<PCB>{
 
     public void changeStatus(Status newStatus) { this.status = newStatus; }
     public Status getStatus() { return this.status; }
+
+    public int getRamSize() { return this.ramSize; }
 
     public Type getProcessType() { return this.processType; }
 
