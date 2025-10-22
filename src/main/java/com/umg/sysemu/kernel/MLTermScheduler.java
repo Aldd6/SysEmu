@@ -64,6 +64,8 @@ public class MLTermScheduler {
             }
             inRamSince.put(cand.getPid(),tick);
             suspendedSince.remove(cand.getPid());
+
+            stampFirstArrival(cand,tick);
         }
     }
 
@@ -86,6 +88,8 @@ public class MLTermScheduler {
                 inRamSince.put(cand.getPid(),tick);
                 suspendedSince.remove(cand.getPid());
                 any = true;
+
+                stampFirstArrival(cand,tick);
                 continue;
             }
             List<PCB> victims = pickVictims(mm.viewReadyQueue(), need - mm.getFreeMemory(), tick);
@@ -112,6 +116,8 @@ public class MLTermScheduler {
                 inRamSince.put(cand.getPid(),tick);
                 suspendedSince.remove(cand.getPid());
                 any = true;
+
+                stampFirstArrival(cand,tick);
             }else {
                 break;
             }
@@ -156,5 +162,9 @@ public class MLTermScheduler {
                 suspendedSince.put(pid, tick);
             }
         }
+    }
+
+    private void stampFirstArrival(PCB p, int tick) {
+        if(p.getArrivalTime() < 0) p.setArrivalTimeAt(tick);
     }
 }

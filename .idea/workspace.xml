@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ac4e653-aa50-4704-80fe-adf4daf72f39" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/MLTermScheduler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/Kernel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/MLTermScheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/MLTermScheduler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/MainMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/MainMemory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/VirtualMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/VirtualMemory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/process/PCB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/process/PCB.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +23,7 @@
         <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -115,7 +119,8 @@
       <workItem from="1760661831371" duration="1343000" />
       <workItem from="1760663192008" duration="106000" />
       <workItem from="1760972091903" duration="13847000" />
-      <workItem from="1761057805474" duration="6112000" />
+      <workItem from="1761057805474" duration="7280000" />
+      <workItem from="1761106655459" duration="9190000" />
     </task>
     <servers />
   </component>

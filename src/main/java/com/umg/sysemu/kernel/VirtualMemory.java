@@ -6,6 +6,7 @@ import com.umg.sysemu.process.Type;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -15,6 +16,11 @@ public class VirtualMemory {
     private List<PCB> suspendedQueue;
 
     public enum VirtualQueue {NEW,SUSPENDED}
+
+    public VirtualMemory() {
+        this.newQueue = new ArrayList<>();
+        this.suspendedQueue = new ArrayList<>();
+    }
 
     public void loadAtBoot(String url) {
         Scanner file = new Scanner(System.in);

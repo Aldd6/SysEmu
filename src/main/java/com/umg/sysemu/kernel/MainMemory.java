@@ -10,9 +10,9 @@ public class MainMemory {
     private int memorySize;
     private int memoryUsed;
 
-    public MainMemory() {
+    public MainMemory(int initialRamSize) {
         this.readyQueue = new ArrayList<>();
-        this.memorySize = 0;
+        this.memorySize = initialRamSize;
         this.memoryUsed = 0;
     }
 

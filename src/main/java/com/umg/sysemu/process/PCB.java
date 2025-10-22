@@ -42,6 +42,8 @@ public class PCB implements Comparable<PCB>{
     public int getCompletionTime() { return this.completionTime; }
     public void setAttentionTimeAt(int attentionTime) { this.attentionTime = attentionTime; }
     public int getAttentionTime() { return this.attentionTime; }
+    public int getCpuBursts() { return this.cpuBursts; }
+    public int getCpuBurstsTotal() { return this.cpuBurstsTotal; }
 
     public int calculateTurnaroundTime() {
         this.turnaroundTime = completionTime - arrivalTime;
