@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ac4e653-aa50-4704-80fe-adf4daf72f39" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/Kernel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/RunningInspector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/MLTermScheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/MLTermScheduler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/Kernel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/Kernel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/MainMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/MainMemory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/VirtualMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/VirtualMemory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/process/PCB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/process/PCB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/FCFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/FCFS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/FairShare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/FairShare.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/MultilevelQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/MultilevelQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/RoundRobin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/RoundRobin.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +26,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Interface" />
         <option value="Class" />
         <option value="Record" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -50,21 +55,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Programs/IntelliJ/SystemSimulator&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Programs/IntelliJ/SystemSimulator",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.umg.sysemu.Main" />
@@ -121,6 +126,8 @@
       <workItem from="1760972091903" duration="13847000" />
       <workItem from="1761057805474" duration="7280000" />
       <workItem from="1761106655459" duration="9190000" />
+      <workItem from="1761142184502" duration="2932000" />
+      <workItem from="1761155881147" duration="4470000" />
     </task>
     <servers />
   </component>
@@ -128,15 +135,6 @@
     <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="quantumTracker" language="JAVA" />

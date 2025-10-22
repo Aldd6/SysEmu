@@ -6,20 +6,17 @@ import com.umg.sysemu.process.Type;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class VirtualMemory {
-    private List<PCB> newQueue;
-    private List<PCB> suspendedQueue;
+    private final Deque<PCB> newQueue;
+    private final Deque<PCB> suspendedQueue;
 
     public enum VirtualQueue {NEW,SUSPENDED}
 
     public VirtualMemory() {
-        this.newQueue = new ArrayList<>();
-        this.suspendedQueue = new ArrayList<>();
+        this.newQueue = new ArrayDeque<>();
+        this.suspendedQueue = new ArrayDeque<>();
     }
 
     public void loadAtBoot(String url) {
@@ -56,8 +53,8 @@ public class VirtualMemory {
         }
     }
 
-    public List<PCB> viewNewQueue() { return this.newQueue; }
-    public List<PCB> viewSuspendedQueue() { return this.suspendedQueue; }
+    public Deque<PCB> viewNewQueue() { return this.newQueue; }
+    public Deque<PCB> viewSuspendedQueue() { return this.suspendedQueue; }
 
     public boolean allocate(PCB p) {
         if(p == null) return false;
@@ -77,16 +74,16 @@ public class VirtualMemory {
 
     public PCB deallocate(VirtualQueue queue) {
         switch (queue) {
-            case NEW -> { return newQueue.removeFirst();}
-            case SUSPENDED -> { return suspendedQueue.removeFirst();}
+            case NEW -> { return newQueue.pollFirst();}
+            case SUSPENDED -> { return suspendedQueue.pollFirst();}
             default -> {return null;}
         }
     }
 
     public PCB peek(VirtualQueue queue) {
         return switch(queue) {
-            case NEW -> newQueue.getFirst();
-            case SUSPENDED -> suspendedQueue.getFirst();
+            case NEW -> newQueue.peekFirst();
+            case SUSPENDED -> suspendedQueue.peekFirst();
         };
     }
 

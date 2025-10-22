@@ -5,7 +5,7 @@ import com.umg.sysemu.process.Status;
 
 import java.util.*;
 
-public class MultilevelQueue implements IScheduler{
+public class MultilevelQueue implements IScheduler,RunningInspector{
     private List<PCB> sysQueue;
     private List<PCB> userQueue;
     private List<PCB> batchQueue;
@@ -21,6 +21,9 @@ public class MultilevelQueue implements IScheduler{
 
     private int sysQuantum;
     private int userQuantum;
+
+    private Long curPid;
+    private String curLane;
 
     private RoundRobin rrSystem;
     private RoundRobin rrUser;
@@ -42,6 +45,9 @@ public class MultilevelQueue implements IScheduler{
 
         this.sysQuantum = sysQuantum;
         this.userQuantum = userQuantum;
+
+        this.curPid = null;
+        this.curLane = null;
 
         this.rrSystem = new RoundRobin(this.sysQuantum);
         this.rrUser = new RoundRobin(this.userQuantum);
@@ -75,7 +81,10 @@ public class MultilevelQueue implements IScheduler{
         clean(userQueue,userSet);
         clean(batchQueue,batchSet);
 
-        if(isAllQueuesEmpty() && !isCpuBusy()) return;
+        if(isAllQueuesEmpty() && !isCpuBusy()) {
+            updateInspector();
+            return;
+        }
 
         if(rrUser.isCpuBusy() && !sysQueue.isEmpty()) {
             rrUser.preempt(userQueue);
@@ -87,6 +96,7 @@ public class MultilevelQueue implements IScheduler{
 
         rrSystem.execute(sysQueue);
         inUseFlagSys = rrSystem.isCpuBusy();
+        updateInspector();
         if(!sysQueue.isEmpty() || inUseFlagSys) return;
 
         if(fcsBatch.isCpuBusy() && !userQueue.isEmpty()) {
@@ -95,24 +105,16 @@ public class MultilevelQueue implements IScheduler{
 
         rrUser.execute(userQueue);
         inUseFlagUser = rrUser.isCpuBusy();
+        updateInspector();
         if(!userQueue.isEmpty() || inUseFlagUser) return;
 
         fcsBatch.execute(batchQueue);
         inUseFlagBatch = fcsBatch.isCpuBusy();
+        updateInspector();
     }
 
     @Override
     public boolean isCpuBusy() { return inUseFlagSys || inUseFlagUser || inUseFlagBatch; }
-
-    @Override
-    public void printResults() {
-        System.out.println("--------- SYSTEM QUEUE ---------");
-        rrSystem.printResults();
-        System.out.println("--------- USER QUEUE ---------");
-        rrUser.printResults();
-        System.out.println("--------- BATCH QUEUE ---------");
-        fcsBatch.printResults();
-    }
 
     private boolean isAllQueuesEmpty() { return sysQueue.isEmpty() && userQueue.isEmpty() && batchQueue.isEmpty(); }
 
@@ -126,4 +128,38 @@ public class MultilevelQueue implements IScheduler{
             }
         }
     }
+
+    @Override
+    public Long currentPid() { return curPid; }
+    @Override
+    public String currentLane() { return curLane; }
+
+    @Override
+    public void printResults() {
+        System.out.println("--------- SYSTEM QUEUE ---------");
+        rrSystem.printResults();
+        System.out.println("--------- USER QUEUE ---------");
+        rrUser.printResults();
+        System.out.println("--------- BATCH QUEUE ---------");
+        fcsBatch.printResults();
+    }
+
+    private void updateInspector() {
+        curPid = null;
+        curLane = null;
+
+        if (rrSystem instanceof RunningInspector riS) {
+            Long p = riS.currentPid();
+            if (p != null) { curPid = p; curLane = "SYSTEM"; return; }
+        }
+        if (rrUser instanceof RunningInspector riU) {
+            Long p = riU.currentPid();
+            if (p != null) { curPid = p; curLane = "USER"; return; }
+        }
+        if (fcsBatch instanceof RunningInspector riB) {
+            Long p = riB.currentPid();
+            if (p != null) { curPid = p; curLane = "BATCH"; }
+        }
+    }
+
 }

@@ -28,6 +28,8 @@ public class MainMemory {
         if(readyQueue.contains(p)) return true;
         if(memoryUsed + size > memorySize) return false;
 
+        if(p.getPid() < 0) p.assignPid();
+
         memoryUsed += size;
         readyQueue.addLast(p);
         return true;

@@ -31,6 +31,7 @@ public class PCB implements Comparable<PCB>{
         this.waitingTime = -1;
         this.responseTime = -1;
         this.userIdOwner = userIdOwner;
+        this.pid = -1;
     }
 
     public void assignPid() { this.pid = System.nanoTime(); }

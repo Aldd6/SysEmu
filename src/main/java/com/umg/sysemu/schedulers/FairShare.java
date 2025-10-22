@@ -6,7 +6,7 @@ import com.umg.sysemu.process.Status;
 import java.util.*;
 import java.util.function.Function;
 
-public class FairShare implements IScheduler{
+public class FairShare implements IScheduler,RunningInspector{
     private static final int EPOCH_LENGTH = 60;
 
     private int rrQuantum;
@@ -24,6 +24,9 @@ public class FairShare implements IScheduler{
 
     private Set<Long> ramPids;
 
+    private Long curPid;
+    private String curUser;
+
     public FairShare(int rrQuantum) {
         this.queueByUser = new HashMap<>();
         this.seenByUser = new HashMap<>();
@@ -34,6 +37,8 @@ public class FairShare implements IScheduler{
         this.ptr = 0;
         this.ramPids = new HashSet<>();
         this.rrQuantum = rrQuantum;
+        this.curPid = null;
+        this.curUser = null;
     }
 
     @Override
@@ -76,7 +81,10 @@ public class FairShare implements IScheduler{
         }
 
         String uid = pickNextEligibleUser();
-        if(uid == null) return;
+        if(uid == null) {
+            updateIntrospectionIdle();
+            return;
+        }
 
         for(String other : order) {
             if(!other.equals(uid)) {
@@ -90,6 +98,7 @@ public class FairShare implements IScheduler{
         IScheduler policy = userPolicy.get(uid);
         List<PCB> queue = queueByUser.get(uid);
         policy.execute(queue);
+        updateIntrospectionForUser(uid);
 
         budget.put(uid, Math.max(0, budget.getOrDefault(uid, 0) - 1));
         epochRemaining = Math.max(0, epochRemaining - 1);
@@ -105,14 +114,6 @@ public class FairShare implements IScheduler{
     public boolean isCpuBusy() {
         for(IScheduler eng : userPolicy.values()) if(eng.isCpuBusy()) return true;
         return false;
-    }
-
-    @Override
-    public void printResults() {
-        for(IScheduler eng : userPolicy.values()) {
-            System.out.println("------- USER -------");
-            eng.printResults();
-        }
     }
 
     private boolean isBudgetAvilable() {
@@ -158,4 +159,31 @@ public class FairShare implements IScheduler{
         }
         return null;
     }
+
+    @Override
+    public void printResults() {
+        for(IScheduler eng : userPolicy.values()) {
+            System.out.println("------- USER -------");
+            eng.printResults();
+        }
+    }
+
+    private void updateIntrospectionIdle() {
+        curPid = null;
+        curUser = null;
+    }
+
+    private void updateIntrospectionForUser(String uid) {
+        curPid = null;
+        curUser = null;
+        IScheduler pol = userPolicy.get(uid);
+        if (pol instanceof RunningInspector ri) {
+            Long p = ri.currentPid();
+            if (p != null) { curPid = p; curUser = uid; }
+        }
+    }
+
+    @Override public Long currentPid()   { return curPid;  }
+    @Override public String currentLane(){ return curUser; }
+
 }

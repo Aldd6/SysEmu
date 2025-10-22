@@ -7,7 +7,7 @@ import com.umg.sysemu.process.Status;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FCFS implements IScheduler,PreemptPolicy{
+public class FCFS implements IScheduler,PreemptPolicy,RunningInspector{
     private List<PCB> ganttChart;
     private PCB processInUse;
     private boolean inUseFlag;
@@ -50,6 +50,9 @@ public class FCFS implements IScheduler,PreemptPolicy{
         processInUse = null;
         inUseFlag = false;
     }
+
+    @Override
+    public Long currentPid() { return inUseFlag && processInUse != null ? processInUse.getPid() : null; }
 
     @Override
     public void printResults() {

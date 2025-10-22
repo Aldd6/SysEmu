@@ -4,6 +4,7 @@ import com.umg.sysemu.UI.DTO.*;
 import com.umg.sysemu.process.PCB;
 import com.umg.sysemu.process.Status;
 import com.umg.sysemu.schedulers.IScheduler;
+import com.umg.sysemu.schedulers.RunningInspector;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -21,6 +22,7 @@ public class Kernel {
 
     private Long lastPid = null;
     private int lastStart = 0;
+    private String lastLane = null;
     private final List<TimelineSlice> timeline = new ArrayList<>();
 
     private Map<Long,PCB> registry = new HashMap<>();
@@ -52,12 +54,12 @@ public class Kernel {
 
         final Long nowPid = findRunningPid();
         final String policyName = getActualPolicyName();
-        updateGantt(tick,policyName,null);
+        updateGantt(tick,policyName);
 
         if(nowPid != null) ticksRunWithPid++;
         ticksElapsed++;
 
-        for(PCB p : ram.viewReadyQueue()) {
+        for(PCB p : new ArrayList<>(ram.viewReadyQueue())) {
             if(p.getStatus() == Status.TERMINATED) {
                 ram.deallocate(p);
             }
@@ -192,27 +194,30 @@ public class Kernel {
     }
 
     private Long findRunningPid() {
-        for(PCB p : ram.viewReadyQueue()) if(p.getStatus() == Status.RUNNING) return p.getPid();
+        if (cpu instanceof RunningInspector ri) return ri.currentPid();
+        for (PCB p : ram.viewReadyQueue()) if (p.getStatus() == Status.RUNNING) return p.getPid();
         return null;
     }
 
-    private void updateGantt(int tick, String policy, String lane) {
+    private void updateGantt(int tick, String policy) {
+        String nowLane = (cpu instanceof  RunningInspector ri) ? ri.currentLane() : null;
         Long nowPid = findRunningPid();
         boolean changed = !Objects.equals(nowPid, lastPid);
         if(changed) {
             if(lastPid != null) {
-                timeline.add(new TimelineSlice(lastStart, tick, lastPid,policy,lane));
+                timeline.add(new TimelineSlice(lastStart, tick, lastPid,policy,lastLane));
 
             }
             lastPid = nowPid;
             lastStart = tick;
+            lastLane = nowLane;
         }
     }
 
     public void flushTimelineAtEnd() {
         int tick = Clock.time();
         if(lastPid != null) {
-            timeline.add(new TimelineSlice(lastStart,tick,lastPid,cpu.getClass().getSimpleName(),null));
+            timeline.add(new TimelineSlice(lastStart,tick,lastPid,cpu.getClass().getSimpleName(),lastLane));
             lastPid = null;
         }
     }
