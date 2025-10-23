@@ -35,6 +35,10 @@ public class FCFS implements IScheduler,PreemptPolicy,RunningInspector{
             processInUse.setCompletionTimeAt(Clock.time() + 1);
             processInUse.changeStatus(Status.TERMINATED);
             ganttChart.add(processInUse);
+
+            readyQueue.add(processInUse);
+
+            processInUse = null;
             inUseFlag = false;
         }
     }

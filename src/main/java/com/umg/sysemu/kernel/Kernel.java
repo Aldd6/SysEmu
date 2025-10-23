@@ -91,12 +91,17 @@ public class Kernel {
     }
 
     public boolean isFinished() {
-        boolean isRamEmpty = ram.viewReadyQueue().isEmpty();
-        boolean isVmEmpty = vm.viewNewQueue().isEmpty() && vm.viewSuspendedQueue().isEmpty();
-        boolean isCpuIdle = !cpu.isCpuBusy();
-        boolean allTerminated = registry.values().stream()
-                .allMatch(p -> p.getStatus() == Status.TERMINATED);
-        return allTerminated || (isRamEmpty && isVmEmpty && isCpuIdle);
+        boolean ramEmpty = ram.viewReadyQueue().isEmpty();
+        boolean vmEmpty  = vm.viewNewQueue().isEmpty() && vm.viewSuspendedQueue().isEmpty();
+        boolean cpuIdle  = !cpu.isCpuBusy();
+
+        // Termina únicamente cuando no hay nada en RAM ni en VM y la CPU está ociosa
+        if (ramEmpty && vmEmpty && cpuIdle) return true;
+
+        // (Opcional) si solo quedan jobs imposibles (más grandes que la RAM total), corta:
+        if (ramEmpty && cpuIdle && !vmEmpty && allInVmAreOversized()) return true;
+
+        return false;
     }
 
     public void loadJobsAtBoot(String url) {
@@ -107,7 +112,6 @@ public class Kernel {
     public void addProcess(PCB p) {
         p.changeStatus(Status.NEW);
         vm.allocate(p);
-        registry.put(p.getPid(), p);
     }
 
     public MemoryView getMemoryView() {
@@ -119,8 +123,8 @@ public class Kernel {
     }
 
     public List<ProcessRow> getProcessTable() {
-        List<ProcessRow> rows = new ArrayList<>(registry.size());
-        for(PCB p : registry.values()) {
+        List<ProcessRow> rows = new ArrayList<>();
+        for(PCB p : snapshotAllByIdentity()) {
             rows.add(new ProcessRow(
                     p.getPid(),
                     p.getUserId(),
@@ -138,7 +142,11 @@ public class Kernel {
             ));
         }
 
-        rows.sort(Comparator.comparingInt(ProcessRow::arrival).thenComparingLong(ProcessRow::pid));
+        rows.sort(
+                Comparator
+                        .comparingInt((ProcessRow r) -> r.arrival() < 0 ? Integer.MAX_VALUE : r.arrival())
+                        .thenComparingLong(ProcessRow::pid)
+        );
         return rows;
     }
 
@@ -221,4 +229,23 @@ public class Kernel {
             lastPid = null;
         }
     }
+
+    private Collection<PCB> snapshotAllByIdentity() {
+        // Unión RAM + VM + lo que ya tenías en registry, deduplicado por identidad de objeto
+        Set<PCB> snap = Collections.newSetFromMap(new IdentityHashMap<>());
+        snap.addAll(registry.values());                 // terminados o admitidos previamente
+        snap.addAll(ram.viewReadyQueue());              // en RAM
+        snap.addAll(vm.viewNewQueue());                 // en VM (NEW)
+        snap.addAll(vm.viewSuspendedQueue());           // en VM (SUSPENDED)
+        return snap;
+    }
+
+    private boolean allInVmAreOversized() {
+        int cap = ram.getMemorySize();
+        boolean any = false;
+        for (PCB p : vm.viewNewQueue())       { any = true; if (p.getRamSize() <= cap) return false; }
+        for (PCB p : vm.viewSuspendedQueue()) { any = true; if (p.getRamSize() <= cap) return false; }
+        return any;
+    }
+
 }

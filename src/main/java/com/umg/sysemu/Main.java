@@ -19,7 +19,7 @@ public class Main {
                 () -> new MainMemory(4024),
                 () -> new VirtualMemory(),
                 () -> new MLTermScheduler(MLTermScheduler.VictimPolicy.LOW_PRIORITY_FIRST),
-                () -> new RoundRobin(2)
+                () -> new RoundRobin(3)
         );
 
         krnl.loadJobsAtBoot("C:\\Programs\\IntelliJ\\SysEmu\\src\\main\\java\\com\\umg\\sysemu\\assets\\MemoryOne.txt");
@@ -29,7 +29,7 @@ public class Main {
         }
 
         System.out.println(krnl.getAverages());
-        for(ProcessRow t : krnl.getProcessTable()) {
+        for(TimelineSlice t : krnl.getTimeline()) {
             System.out.println(t);
         }
 

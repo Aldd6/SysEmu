@@ -54,6 +54,8 @@ public class RoundRobin implements IScheduler,PreemptPolicy, RunningInspector{
             quantumTracker.remove(pidInUse);
             ganttChart.add(processInUse);
 
+            readyQueue.addFirst(processInUse);
+
             processInUse = null;
             pidInUse = null;
             inUseFlag = false;
