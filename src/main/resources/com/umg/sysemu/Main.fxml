@@ -455,7 +455,6 @@
                                                    <children>
                                                       <Label text="RAM Size (MB)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                       <TextField fx:id="txtSRam" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                      <Button fx:id="btnSRamApply" mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="Apply" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                    </children>
                                                 </GridPane>
                                              </children>

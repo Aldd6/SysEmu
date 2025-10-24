@@ -48,6 +48,8 @@ public class MainController implements Initializable {
     @FXML private Label lblLastCompletion;
     @FXML private Label lblLastTurnaround;
 
+    @FXML private Label lblPathJob;
+
     @FXML private ChoiceBox<String> cmbPolicies;
     @FXML private ChoiceBox<String> cmbType;
 
@@ -102,6 +104,8 @@ public class MainController implements Initializable {
         cmbPolicies.getItems().addAll(schedulingPolicies);
         cmbPolicies.setValue(schedulingPolicies[0]);
         actualPolicy = Policy.RR;
+        ganttController.setLaneMode(GanttController.LaneMode.PID);
+        ganttController.setColorMode(GanttController.ColorMode.PID);
         cmbPolicies.setOnAction(e -> changePolicy());
 
         txtRRQuantum.setText("0");
@@ -133,7 +137,6 @@ public class MainController implements Initializable {
         btnRun.setDisable(true);
         btnLoadFile.setDisable(true);
         btnCreate.setDisable(true);
-        btnSRamApply.setDisable(true);
 
         btnInit.setOnAction(e -> init());
         btnCreate.setOnAction(e -> createProcess());
@@ -145,8 +148,11 @@ public class MainController implements Initializable {
         File path = file.showOpenDialog(primaryStage);
         if(path != null) {
             pathToFile = path.getPath();
+            lblPathJob.setText(pathToFile);
             displayInformationDialog(primaryStage,AlertType.INFORMATION,"Archivo de trabajos cargado correctamente al kernel");
         }else {
+            pathToFile = null;
+            lblPathJob.setText("N/A");
             displayInformationDialog(primaryStage,AlertType.INFORMATION,"No se ha cargado ningun archivo de trabajos");
         }
     }
@@ -187,6 +193,11 @@ public class MainController implements Initializable {
             }
             PCB p = new PCB(priority,cpu,ram,pType,user);
             futureJobs.add(p);
+            txtPriority.setText("0");
+            txtRam.setText("0");
+            txtCpu.setText("0");
+            txtUser.setText("NONE");
+            cmbType.setValue(processType[0]);
             displayInformationDialog(primaryStage,AlertType.INFORMATION,"Proceso agregado correctamente");
         }
     }
@@ -226,7 +237,7 @@ public class MainController implements Initializable {
                     () -> new FairShare(Integer.parseInt(txtFSQ.getText()))
             );
         }
-        displayInformationDialog(primaryStage,AlertType.INFORMATION,"Arranque del Kernel exitoso, por favor cargue los procesos a analizar en el apartado de PROGRAM LIST");
+        displayInformationDialog(primaryStage,AlertType.INFORMATION,"Arranque del Kernel exitoso");
 
         lblLastScheduler.setText(lblScheduler.getText());
         lblLastCompletion.setText(lblCompletion.getText());
@@ -249,12 +260,15 @@ public class MainController implements Initializable {
             return;
         }
 
-        boolean isFileNotLoad = pathToFile.isEmpty() || pathToFile.isBlank();
-        if(isFileNotLoad) {
-            displayInformationDialog(primaryStage,AlertType.ERROR,"Por favor seleccione un archivo de texto plano con un pool de trabajos");
+        boolean isFileNotLoad = pathToFile == null;
+        boolean thereArentUsProcess = futureJobs.isEmpty();
+        if(isFileNotLoad && thereArentUsProcess) {
+            displayInformationDialog(primaryStage,AlertType.ERROR,"Por favor seleccione un archivo de texto plano con un pool de trabajos o carguelos manualmente");
             return;
         }
-        krnl.loadJobsAtBoot(pathToFile);
+        if(!isFileNotLoad) {
+            krnl.loadJobsAtBoot(pathToFile);
+        }
         if(!futureJobs.isEmpty()) {
             for(PCB job : futureJobs) {
                 krnl.addProcess(job);
@@ -318,9 +332,24 @@ public class MainController implements Initializable {
 
     public void changePolicy() {
         switch (cmbPolicies.getValue()) {
-            case "ROUND ROBIN" -> {actualPolicy = Policy.RR; System.out.println(actualPolicy);}
-            case "FCFS" -> {actualPolicy = Policy.FCFS; System.out.println(actualPolicy);}
-            case "MULTILEVEL QUEUE" -> {actualPolicy = Policy.MLQ; System.out.println(actualPolicy);}
+            case "ROUND ROBIN" -> {
+                actualPolicy = Policy.RR;
+                System.out.println(actualPolicy);
+                ganttController.setLaneMode(GanttController.LaneMode.PID);
+                ganttController.setColorMode(GanttController.ColorMode.PID);
+            }
+            case "FCFS" -> {
+                actualPolicy = Policy.FCFS;
+                System.out.println(actualPolicy);
+                ganttController.setLaneMode(GanttController.LaneMode.PID);
+                ganttController.setColorMode(GanttController.ColorMode.PID);
+            }
+            case "MULTILEVEL QUEUE" -> {
+                actualPolicy = Policy.MLQ;
+                System.out.println(actualPolicy);
+                ganttController.setLaneMode(GanttController.LaneMode.LANE);
+                ganttController.setColorMode(GanttController.ColorMode.LANE);
+            }
             case "FAIR SHARE" -> {actualPolicy = Policy.FS; System.out.println(actualPolicy);}
         }
     }
