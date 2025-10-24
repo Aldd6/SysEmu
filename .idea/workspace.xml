@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ac4e653-aa50-4704-80fe-adf4daf72f39" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/umg/sysemu/Main.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/HelloApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/assets/MemoryOne.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/assets/MemoryOne.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/Kernel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/Kernel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/MLTermScheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/kernel/MLTermScheduler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/FCFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/FCFS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/RoundRobin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/schedulers/RoundRobin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,9 +23,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="Record" />
         <option value="Interface" />
+        <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -51,21 +53,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/DELL/AppData/Local/SceneBuilder/SceneBuilder.exe",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SysEmu [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SysEmu [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SysEmu [org.apache.maven.plugins:maven-clean-plugin:2.5:clean].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/DELL/AppData/Local/SceneBuilder/SceneBuilder.exe&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.HelloApplication">
     <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.umg.sysemu.HelloApplication" />
@@ -140,7 +146,12 @@
       <workItem from="1761155881147" duration="4470000" />
       <workItem from="1761173619667" duration="301000" />
       <workItem from="1761178550011" duration="85000" />
-      <workItem from="1761212254353" duration="6506000" />
+      <workItem from="1761212254353" duration="8178000" />
+      <workItem from="1761237952119" duration="5802000" />
+      <workItem from="1761248940780" duration="3065000" />
+      <workItem from="1761258103766" duration="4174000" />
+      <workItem from="1761263970121" duration="5026000" />
+      <workItem from="1761314392223" duration="8554000" />
     </task>
     <servers />
   </component>
@@ -148,6 +159,19 @@
     <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/umg/sysemu/UI/Controller/MainController.java</url>
+          <line>193</line>
+          <properties class="com.umg.sysemu.UI.Controller.MainController" method="init">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="quantumTracker" language="JAVA" />

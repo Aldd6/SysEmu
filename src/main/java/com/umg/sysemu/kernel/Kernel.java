@@ -8,6 +8,7 @@ import com.umg.sysemu.schedulers.RunningInspector;
 
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class Kernel {
     private MainMemory ram;
@@ -67,7 +68,6 @@ public class Kernel {
 
         Clock.forward();
     }
-
 
 
     public void reset() {
@@ -172,22 +172,19 @@ public class Kernel {
 
     public String getActualPolicyName() { return cpu.getClass().getSimpleName(); }
 
-    public Map<String,List<Long>> getQueues() {
-        Map<String, List<Long>> q = new LinkedHashMap<>();
+    public Map<String,List<PCB>> getQueues() {
+        Map<String, List<PCB>> q = new LinkedHashMap<>();
         q.put("RAM_READY",
                 ram.viewReadyQueue().
-                        stream().map(PCB::getPid).
-                        toList()
+                        stream().toList()
         );
         q.put("VM_NEW",
                 vm.viewNewQueue().
-                        stream().map(PCB::getPid).
-                        toList()
+                        stream().toList()
         );
         q.put("VM_SUSPENDED",
                 vm.viewSuspendedQueue().
-                        stream().map(PCB::getPid).
-                        toList()
+                        stream().toList()
         );
         return q;
     }

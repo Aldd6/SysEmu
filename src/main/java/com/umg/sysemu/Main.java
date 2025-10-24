@@ -26,10 +26,15 @@ public class Main {
 
         while(!krnl.isFinished()) {
             krnl.step();
+//            System.out.println("---------------------------------------------> RAM OUT");
+//            for(PCB p : krnl.getQueues().get("VM_SUSPENDED")) {
+//                System.out.println(p.getPid() + " " + p.getStatus());
+//            }
+//            System.out.println("RAM IN <--------------------------------------------- ");
         }
 
         System.out.println(krnl.getAverages());
-        for(TimelineSlice t : krnl.getTimeline()) {
+        for(ProcessRow t : krnl.getProcessTable()) {
             System.out.println(t);
         }
 

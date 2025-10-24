@@ -55,7 +55,7 @@ public class MLTermScheduler {
             PCB cand = vm.peek(q);
             if (cand == null) break;
 
-            // Si es imposible (más grande que la RAM total), no bloquees la cabeza
+            // Si es imposible (más grande que la RAM total), no bloquea la cabeza
             if (cand.getRamSize() > mm.getMemorySize()) {
                 cand = vm.deallocate(q);
                 vm.allocate(cand); // re-encóla al final
@@ -63,7 +63,7 @@ public class MLTermScheduler {
                 continue;
             }
 
-            // ¿Cabe ya?
+            // ¿hay espacio suficiente?
             if (mm.getFreeMemory() >= cand.getRamSize()) {
                 cand = vm.deallocate(q);
                 cand.changeStatus(Status.READY);
@@ -77,7 +77,7 @@ public class MLTermScheduler {
                 suspendedSince.remove(cand.getPid());
                 stampFirstArrival(cand, tick);
 
-                // tras admitir, podemos seguir intentando más (resetea ventana)
+                // tras admitir, seguir intentando más (resetea ventana)
                 scans = 0;
                 // recalcula tamaño para evitar over/under-scan si la cola cambió
                 maxScans = (q == VirtualMemory.VirtualQueue.NEW)
@@ -110,11 +110,11 @@ public class MLTermScheduler {
 
             // Caso imposible: proceso más grande que la RAM total
             if (cand.getRamSize() > mm.getMemorySize()) {
-                // Marcarlo o simplemente rótalo al final para no bloquear la cabeza
+                // Marcarlo o simplemente rotarlo al final para no bloquear la cabeza
                 cand = vm.deallocate(q);           // sacar cabeza
                 vm.allocate(cand);                 // re-encolar al final (sigue en su mismo estado NEW/SUSPENDED)
                 scans++;
-                if (scans >= maxScans) break;      // ya revisamos a todos; corta
+                if (scans >= maxScans) break;
                 continue;
             }
 
@@ -131,9 +131,9 @@ public class MLTermScheduler {
                 }
                 inRamSince.put(cand.getPid(), tick);
                 suspendedSince.remove(cand.getPid());
-                stampFirstArrival(cand, tick);    // <<< asegúrate de tener este helper
+                stampFirstArrival(cand, tick);
                 any = true;
-                scans = 0;                          // éxito → resetea ventana de escaneo
+                scans = 0;                          // éxito -> resetea ventana de escaneo
                 continue;
             }
 
@@ -141,11 +141,11 @@ public class MLTermScheduler {
             List<PCB> victims = pickVictims(mm.viewReadyQueue(), need, tick);
 
             if (victims.isEmpty()) {
-                // No puedo liberar lo suficiente para ESTA cabeza AHORA → rotar y probar siguiente
+                // No puedo liberar lo suficiente para ESTA cabeza AHORA -> rotar y probar siguiente
                 PCB head = vm.deallocate(q);
                 vm.allocate(head);
                 scans++;
-                if (scans >= maxScans) break;      // ya probamos a todos; corta
+                if (scans >= maxScans) break;
                 continue;
             }
 
