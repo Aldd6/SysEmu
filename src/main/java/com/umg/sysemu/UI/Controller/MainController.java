@@ -251,6 +251,7 @@ public class MainController implements Initializable {
         btnCreate.setDisable(false);
 
         btnRun.setOnAction(e -> run());
+        if(!processRows.isEmpty()) processRows.clear();
     }
 
     public void run() {
@@ -350,7 +351,11 @@ public class MainController implements Initializable {
                 ganttController.setLaneMode(GanttController.LaneMode.LANE);
                 ganttController.setColorMode(GanttController.ColorMode.LANE);
             }
-            case "FAIR SHARE" -> {actualPolicy = Policy.FS; System.out.println(actualPolicy);}
+            case "FAIR SHARE" -> {
+                actualPolicy = Policy.FS; System.out.println(actualPolicy);
+                ganttController.setLaneMode(GanttController.LaneMode.LANE);
+                ganttController.setColorMode(GanttController.ColorMode.LANE);
+            }
         }
     }
 
