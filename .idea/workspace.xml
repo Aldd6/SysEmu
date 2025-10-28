@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8ac4e653-aa50-4704-80fe-adf4daf72f39" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/UI/Controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/umg/sysemu/UI/Controller/MainController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,6 +146,8 @@
       <workItem from="1761263970121" duration="5026000" />
       <workItem from="1761314392223" duration="11354000" />
       <workItem from="1761365120731" duration="3309000" />
+      <workItem from="1761426782329" duration="209000" />
+      <workItem from="1761611967342" duration="1805000" />
     </task>
     <servers />
   </component>

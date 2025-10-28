@@ -58,7 +58,7 @@ public class MLTermScheduler {
             // Si es imposible (más grande que la RAM total), no bloquea la cabeza
             if (cand.getRamSize() > mm.getMemorySize()) {
                 cand = vm.deallocate(q);
-                vm.allocate(cand); // re-encóla al final
+                vm.allocate(cand);
                 scans++;
                 continue;
             }
@@ -86,7 +86,6 @@ public class MLTermScheduler {
                 continue;
             }
 
-            // No cabe SIN desalojar → rota y prueba el siguiente (evita bloquear por la cabeza)
             PCB head = vm.deallocate(q);
             vm.allocate(head);
             scans++;
@@ -194,13 +193,13 @@ public class MLTermScheduler {
             cands.add(p);
         }
         cands.sort((a,b) -> {
-            int byPriority = Integer.compare(a.getPriority(), b.getPriority());    // baja prioridad primero
+            int byPriority = Integer.compare(a.getPriority(), b.getPriority());
             if (byPriority != 0) return byPriority;
-            int bySize = Integer.compare(b.getRamSize(), a.getRamSize());          // más grandes primero
+            int bySize = Integer.compare(b.getRamSize(), a.getRamSize());
             if (bySize != 0) return bySize;
             int aSince = inRamSince.getOrDefault(a.getPid(), Integer.MIN_VALUE);
             int bSince = inRamSince.getOrDefault(b.getPid(), Integer.MIN_VALUE);
-            return Integer.compare(aSince, bSince);                                 // más antiguos primero
+            return Integer.compare(aSince, bSince);
         });
 
         int acc = 0;
@@ -210,7 +209,7 @@ public class MLTermScheduler {
             acc += p.getRamSize();
             if (acc >= memoryNeeded) break;
         }
-        if (acc < memoryNeeded) return Collections.emptyList(); // <-- evita desalojos inútiles
+        if (acc < memoryNeeded) return Collections.emptyList();
         return victims;
     }
 
